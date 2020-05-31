@@ -24,7 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class ToDoActivity extends AppCompatActivity implements ListView.OnItemLongClickListener {
-
     public FirebaseUser user;
     public String uid;
 
@@ -36,28 +35,30 @@ public class ToDoActivity extends AppCompatActivity implements ListView.OnItemLo
     public CustomAdapter mCustomAdapter;
     public ListView mListView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do);
 
-        //user id = Uid を取得す　ユーザーのID取得
-        uid = user.getUid();
-
+        //ログイン情報を取得
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-         database = FirebaseDatabase.getInstance();
+        //user id = Uid を取得する
+        uid = user.getUid();
+
+        database = FirebaseDatabase.getInstance();
         reference = database.getReference("users").child(uid);
 
         mListView = (ListView) findViewById(R.id.list_view);
 
+        //CustomAdapterをセット
         mCustomAdapter = new CustomAdapter(getApplicationContext(), R.layout.card_view, new ArrayList<ToDoData>());
         mListView.setAdapter(mCustomAdapter);
 
         //LongListenerを設定
         mListView.setOnItemLongClickListener(this);
 
+        //firebaseと同期するリスナー
         reference.addChildEventListener(new ChildEventListener() {
             //            データを読み込むときはイベントリスナーを登録して行う。
             @Override
@@ -98,7 +99,6 @@ public class ToDoActivity extends AppCompatActivity implements ListView.OnItemLo
             }
         });
 
-
     }
 
     public void addButton(View v) {
@@ -107,7 +107,7 @@ public class ToDoActivity extends AppCompatActivity implements ListView.OnItemLo
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
         final ToDoData toDoData = mCustomAdapter.getItem(position);
         uid = user.getUid();
 
@@ -127,6 +127,7 @@ public class ToDoActivity extends AppCompatActivity implements ListView.OnItemLo
 
         return false;
     }
+
     public void logout(View v) {
         mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
