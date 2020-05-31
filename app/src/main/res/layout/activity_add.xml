@@ -17,7 +17,6 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-<!--TODO 1 focusableInTouchMode実際に使う-->
             android:focusableInTouchMode="true"
             android:hint="タイトル"
             android:singleLine="true"
