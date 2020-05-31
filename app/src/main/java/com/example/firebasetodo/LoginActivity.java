@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+//TODO ここでエラー
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             } else {
                 //ログインに失敗した場合
                 System.out.println(result.getStatus());
-                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "ログイン失敗", Toast.LENGTH_SHORT).show();
             }
 
         }
